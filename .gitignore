@@ -1,0 +1,15 @@
+# build output
+bin/
+obj/
+release/
+*.zip
+
+# never commit game / Unity binaries
+*.dll
+*.pdb
+
+# local settings
+*.csproj.user
+.vs/
+.idea/
+*.suo

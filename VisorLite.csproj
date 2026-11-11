@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>VisorLite</AssemblyName>
+    <RootNamespace>VisorLite</RootNamespace>
+    <Version>1.0.0</Version>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DebugType>embedded</DebugType>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <!-- Everything needed to build comes from NuGet, no game install required.
+       GameLibs are stripped/publicized reference assemblies made for modding. Building against v56
+       keeps the mod compatible with v56 and later (tested up to v80). -->
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" PrivateAssets="all" />
+    <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" PrivateAssets="all" />
+    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="56.0.1-ngd.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Optional: copy the built dll into your game. Put this in a VisorLite.csproj.user file (git-ignored):
+       <Project><PropertyGroup><PluginsDir>D:\Games\Lethal Company\BepInEx\plugins\VisorLite</PluginsDir></PropertyGroup></Project> -->
+  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(PluginsDir)' != ''">
+    <MakeDir Directories="$(PluginsDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginsDir)" />
+  </Target>
+
+  <!-- dotnet build -c Release -p:Package=true  ->  release/VisorLite-<version>.zip ready for Thunderstore -->
+  <Target Name="ThunderstorePackage" AfterTargets="Build" Condition="'$(Package)' == 'true'">
+    <PropertyGroup>
+      <PkgDir>$(MSBuildThisFileDirectory)obj\package\</PkgDir>
+    </PropertyGroup>
+    <RemoveDir Directories="$(PkgDir)" />
+    <Copy SourceFiles="$(TargetPath);manifest.json;README.md;CHANGELOG.md;icon.png" DestinationFolder="$(PkgDir)" />
+    <MakeDir Directories="$(MSBuildThisFileDirectory)release" />
+    <ZipDirectory SourceDirectory="$(PkgDir)" DestinationFile="$(MSBuildThisFileDirectory)release\VisorLite-$(Version).zip" Overwrite="true" />
+  </Target>
+
+</Project>

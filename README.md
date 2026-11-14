@@ -34,6 +34,8 @@ Lit glass reflects nearby lights. With VisorLite, the faint highlights on the dr
 | `ToggleKey` | `F1` | Switch between the cheap and the original visor in game (`None` to disable) |
 | `GlassBrightness` | `0.15` | Brightness of the unlit glass tint |
 | `CondensationBrightness` | `0.03` | Brightness of the condensation layer |
+| `SyncCondensationWithGame` | `true` | Copy the game's live condensation (rain, water) onto the cheap visor. Turn off if your visor ever looks wrong in rain |
+| `GlassMode` / `CondensationMode` | `Unlit` | `Unlit` = cheap copy, `Original` = keep the game's expensive layer, `Hidden` = don't draw it |
 
 ## Compatibility
 
@@ -56,7 +58,7 @@ You only need the [.NET SDK](https://dotnet.microsoft.com/download) (6.0 or newe
 
 ```
 dotnet build -c Release                     # -> bin/Release/VisorLite.dll
-dotnet build -c Release -p:Package=true     # -> release/VisorLite-1.0.0.zip (Thunderstore package)
+dotnet build -c Release -p:Package=true     # -> release/VisorLite-<version>.zip (Thunderstore package)
 ```
 
 To copy the dll straight into your game after every build, create `VisorLite.csproj.user` next to the project:

@@ -1,7 +1,7 @@
 {
     "name": "VisorLite",
-    "version_number": "1.0.0",
-    "website_url": "",
+    "version_number": "1.1.0",
+    "website_url": "https://github.com/SfsMoon/visor-lite",
     "description": "+20-40% FPS on weak GPUs: renders the full-screen helmet visor (glass + condensation) unlit instead of with full HDRP lighting. Looks almost identical. Client-side.",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2100"
